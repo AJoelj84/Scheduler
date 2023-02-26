@@ -19,7 +19,7 @@ $(function () {
   //
  
   document.getElementById('saveButton').addEventListener('click', function(){
-    localStorage.setItem('inputarea',inputarea.value);
+    localStorage.setItem('inputarea', inputarea.value, 'timeinput', timeinput.value);
 
   });
   
