@@ -9,7 +9,19 @@ $(function(){
     currentDay.textContent = currentTime.format('hh A');
 
   
-  
+    var timeBlocks = document.querySelectorAll('.time-block');
+    timeBlocks.forEach((timeBlock)=>{
+      var hour = parseInt(timeBlock.id.split('-')[1]);
+          if (hour < currentTime.hour()){
+            timeBlock.classList.add('past');
+            }
+          else if (hour === currentTime.hour()){
+            timeBlock.classList.add('present');
+            }
+          else {
+            timeBlock.classList.add('future');
+          } 
+    })
   
   
   
