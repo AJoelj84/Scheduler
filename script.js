@@ -21,8 +21,16 @@ $(function(){
           else {
             timeBlock.classList.add('future');
           } 
-    })
+    });
   
+    var saveButtons = document.querySelectorAll ('.saveBtn');
+      saveButtons.forEach((saveButton) => {
+          saveButton.addEventListener('click',() => {
+            var inputArea = saveButton.previousElementSibling;
+            localStorage.setItem('hour-${inputArea.parentElement.id.split('-')[1]}'inputArea.value);
+          });
+          });
+      }
   
   
 //   // TODO: Add a listener for click events on the save button. This code should
