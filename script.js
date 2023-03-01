@@ -13,7 +13,7 @@ $(function() {
       timeBlockEl.classList.add('row', 'time-block');
       timeBlockEl.id = 'hour-' + hour;
         containerEl.appendChild(timeBlockEl);
-//Variable inputs the time into the Blocks 
+//Variable Changes the Time to an AM/PM format
     var timeInputEl = document.createElement('div');
       timeInputEl.classList.add('col-2', 'col-md-1', 'hour', 'text-center', 'py-3');
       timeInputEl.textContent = dayjs().hour(hour).format('h A');
@@ -22,6 +22,13 @@ $(function() {
     var inputAreaEl = document.createElement('textarea');
       inputAreaEl.classList.add('col-8', 'col-md-10', 'description');
         timeBlockEl.appendChild(inputAreaEl);
+    
+
+    var savedText = localStorage.getItem('hour-' + hour);
+    if (savedText) {
+      inputAreaEl.value = savedText;
+    }
+
 
 //Save Button Variable Creates Save Button for Each Row 
     var saveButtonEl = document.createElement('button');
@@ -30,10 +37,7 @@ $(function() {
       saveButtonEl.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i>';
         timeBlockEl.appendChild(saveButtonEl);
 
-//Variable to pull Saved Input to the Hour Blocks 
-    var savedInput = localStorage.getItem('hour-' + hour);
-      inputAreaEl.value = savedInput;
-  
+//Variable to pull Saved Input to the Hour Blocks  
     if (hour < currentTime.hour()) {
       timeBlockEl.classList.add('past');
     } else if (hour === currentTime.hour()) {
@@ -41,8 +45,21 @@ $(function() {
     } else {
       timeBlockEl.classList.add('future');
     }
-// Event Listener for Save Button and the Work Input Areas
-    saveButtonEl.addEventListener('click', () => {
-      localStorage.setItem('hour-' + hour, inputAreaEl.value);
-    }); 
-  }});
+
+    saveButtonEl.addEventListener('click', function() {
+      var inputText = this.previousElementSibling.value;
+      var hourId = this.parentElement.id;
+// Local Storage Item Set
+      localStorage.setItem(hourId, inputText);
+    });
+  }
+
+// Window event listener to get the saved data to store in appropriate sections
+  window.addEventListener('beforeunload', function() {
+    for (var hour = 6; hour <= 21; hour++) {
+      var inputAreaEl = document.querySelector('#hour-' + hour + ' textarea');
+      var hourId = 'hour-' + hour;
+      localStorage.setItem(hourId, inputAreaEl.value);
+    }
+  });
+});
