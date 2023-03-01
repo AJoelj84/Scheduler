@@ -3,46 +3,69 @@
 // // the code isn't run until the browser has finished rendering all the elements
 // // in the html.
 $(function() {
+  
   var currentTime = dayjs();
 
-  var currentDay = document.querySelector("#currentDay");
-  currentDay.textContent = currentTime.format("dddd MMMM D, h:mm A");
+  
+  var currentDay = document.querySelector('#currentDay');
+  currentDay.textContent = currentTime.format('dddd MMMM D, h:mm A');
 
-  var timeBlocks = document.querySelectorAll(".time-block");
+ 
+  var containerEl = document.querySelector('.container-fluid');
+  for (var hour = 6; hour <= 21; hour++) {
+    var timeBlockEl = document.createElement('div');
+    timeBlockEl.classList.add('row', 'time-block');
+    timeBlockEl.id = 'hour-' + hour;
+    containerEl.appendChild(timeBlockEl);
+
+    var timeInputEl = document.createElement('div');
+    timeInputEl.classList.add('col-2', 'col-md-1', 'hour', 'text-center', 'py-3');
+    timeInputEl.textContent = timeBlockEl.id
+    timeBlockEl.appendChild(timeInputEl);
+
+    var inputAreaEl = document.createElement('textarea');
+    inputAreaEl.classList.add('col-8', 'col-md-10', 'description');
+    timeBlockEl.appendChild(inputAreaEl);
+
+    var saveButtonEl = document.createElement('button');
+    saveButtonEl.classList.add('btn', 'saveBtn', 'col-2', 'col-md-1');
+    saveButtonEl.setAttribute('aria-label', 'save');
+    saveButtonEl.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i>';
+    timeBlockEl.appendChild(saveButtonEl);
+  }
+
+  
+  var timeBlocks = document.querySelectorAll('.time-block');
   timeBlocks.forEach((timeBlock) => {
-    var hour = parseInt(timeBlock.id.split("-")[1]);
+    var hour = parseInt(timeBlock.id.split('-')[1]);
     if (hour < currentTime.hour()) {
-      timeBlock.classList.add("past");
+      timeBlock.classList.add('past');
     } else if (hour === currentTime.hour()) {
-      timeBlock.classList.add("present");
+      timeBlock.classList.add('present');
     } else {
-      timeBlock.classList.add("future");
+      timeBlock.classList.add('future');
     }
   });
 
-  var saveButtons = document.querySelectorAll(".saveBtn");
+  
+  var saveButtons = document.querySelectorAll('.saveBtn');
   saveButtons.forEach((saveButton) => {
-    saveButton.addEventListener("click", () => {
+    saveButton.addEventListener('click', () => {
       var inputArea = saveButton.previousElementSibling;
       var inputValue = inputArea.value;
-      var hour = saveButton.parentElement.id.split("-")[1];
-      localStorage.setItem(hour, inputValue);
-      var newTimeBlock = saveButton.parentElement.cloneNode(true);
-      newTimeBlock.id = "hour-" + (parseInt(hour) + 1);
-      var newInputArea = newTimeBlock.querySelector(".description");
-      newInputArea.value = "";
-      document.querySelector("#time-blocks").appendChild(newTimeBlock);
+      var hour = inputArea.parentElement.id.split('-')[1];
+      localStorage.setItem('hour-' + hour, inputValue);
     });
   });
 
-  for (var i = 9; i <= 17; i++) {
-    var savedInput = localStorage.getItem(i);
-    var inputArea = document.querySelector("#hour-" + i + " .description");
-    if (savedInput) {
-      inputArea.value = savedInput;
-    }
+  
+  for (var hour = 9; hour <= 17; hour++) {
+    var savedInput = localStorage.getItem('hour-' + hour);
+    var inputArea = document.querySelector('#hour-' + hour + ' .description');
+    inputArea.value = savedInput;
   }
 });
+
 
 
   
