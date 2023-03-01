@@ -2,45 +2,48 @@
 // // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // // the code isn't run until the browser has finished rendering all the elements
 // // in the html.
-$(function(){
-    var currentTime = dayjs();
+$(function() {
+  var currentTime = dayjs();
 
-    var currentDay = document.querySelector('#currentDay');
-    currentDay.textContent = currentTime.format('dddd MMMM D, h:mm A');
+  var currentDay = document.querySelector("#currentDay");
+  currentDay.textContent = currentTime.format("dddd MMMM D, h:mm A");
 
-    var timeInput = dayjs();
-    var timeInput = document.querySelector('timeinput');
-    timeInput.textContent = timeInput.format('h A');
+  var timeBlocks = document.querySelectorAll(".time-block");
+  timeBlocks.forEach((timeBlock) => {
+    var hour = parseInt(timeBlock.id.split("-")[1]);
+    if (hour < currentTime.hour()) {
+      timeBlock.classList.add("past");
+    } else if (hour === currentTime.hour()) {
+      timeBlock.classList.add("present");
+    } else {
+      timeBlock.classList.add("future");
+    }
+  });
 
-  
-    var timeBlocks = document.querySelectorAll('hour');
-    timeBlocks.forEach((timeBlock)=>{
-      var hour = parseInt(timeBlock.id.split('-')[1]);
-          if (hour < currentTime.hour()){
-            timeBlock.classList.add('row time-block past');
-            }
-          else if (hour === currentTime.hour()){
-            timeBlock.classList.add('row time-block present');
-            }
-          else {
-            timeBlock.classList.add('row time-block future');
-          } 
-    });
-  
-    var saveButtons = document.querySelectorAll('.saveBtn');
+  var saveButtons = document.querySelectorAll(".saveBtn");
   saveButtons.forEach((saveButton) => {
-    saveButton.addEventListener('click',()=> {
+    saveButton.addEventListener("click", () => {
       var inputArea = saveButton.previousElementSibling;
       var inputValue = inputArea.value;
-      localStorage.setItem('hour', inputValue);
+      var hour = saveButton.parentElement.id.split("-")[1];
+      localStorage.setItem(hour, inputValue);
+      var newTimeBlock = saveButton.parentElement.cloneNode(true);
+      newTimeBlock.id = "hour-" + (parseInt(hour) + 1);
+      var newInputArea = newTimeBlock.querySelector(".description");
+      newInputArea.value = "";
+      document.querySelector("#time-blocks").appendChild(newTimeBlock);
     });
   });
-      
-  
-  var savedInput = localStorage.getItem('hour');
-  var inputArea = document.querySelector('#hour .description');
-  inputArea.value = savedInput;
+
+  for (var i = 9; i <= 17; i++) {
+    var savedInput = localStorage.getItem(i);
+    var inputArea = document.querySelector("#hour-" + i + " .description");
+    if (savedInput) {
+      inputArea.value = savedInput;
+    }
+  }
 });
+
 
   
 //   // TODO: Add a listener for click events on the save button. This code should
