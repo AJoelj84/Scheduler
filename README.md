@@ -10,4 +10,11 @@
     Task will be reloaded and the Time Block colors will be upated upon Refresh.
 
 # Screenshots
+![Alt text](https://github.com/AJoelj84/Scheduler/blob/main/assets/WDSch1.jpg)
+![Alt text](https://github.com/AJoelj84/Scheduler/blob/main/assets/WDSch2.jpg)
+![Alt text](https://github.com/AJoelj84/Scheduler/blob/main/assets/WDSch3.jpg)
+![Alt text](https://github.com/AJoelj84/Scheduler/blob/main/assets/WDSch4.jpg)
+
+
+
     
