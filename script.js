@@ -6,38 +6,42 @@ $(function(){
     var currentTime = dayjs();
 
     var currentDay = document.querySelector('#currentDay');
-    currentDay.textContent = currentTime.format('hh A');
+    currentDay.textContent = currentTime.format('dddd MMMM D, h:mm A');
+
+    var timeInput = dayjs();
+    var timeInput = document.querySelector('timeinput');
+    timeInput.textContent = timeInput.format('h A');
 
   
-    var timeBlocks = document.querySelectorAll('.time-block');
+    var timeBlocks = document.querySelectorAll('hour');
     timeBlocks.forEach((timeBlock)=>{
       var hour = parseInt(timeBlock.id.split('-')[1]);
           if (hour < currentTime.hour()){
-            timeBlock.classList.add('past');
+            timeBlock.classList.add('row time-block past');
             }
           else if (hour === currentTime.hour()){
-            timeBlock.classList.add('present');
+            timeBlock.classList.add('row time-block present');
             }
           else {
-            timeBlock.classList.add('future');
+            timeBlock.classList.add('row time-block future');
           } 
     });
   
-    var saveButtons = document.querySelectorAll ('.saveBtn');
-      saveButtons.forEach((saveButton) => {
-          saveButton.addEventListener('click',() => {
-            var inputArea = saveButton.previousElementSibling;
-            localStorage.setItem('hour-${inputArea.parentElement.id.split('-')[1]}', inputArea.value);
-          });
-          });
+    var saveButtons = document.querySelectorAll('.saveBtn');
+  saveButtons.forEach((saveButton) => {
+    saveButton.addEventListener('click',()=> {
+      var inputArea = saveButton.previousElementSibling;
+      var inputValue = inputArea.value;
+      localStorage.setItem('hour', inputValue);
+    });
+  });
       
   
-    var savedInputs = Object.entries(localStorage);
-          savedInputs.forEach(([key,value])=>{
-            var inputArea = document.querySelector('#hour-${key}.description');
-            inputArea = value;
-          });
-    
+  var savedInput = localStorage.getItem('hour');
+  var inputArea = document.querySelector('#hour .description');
+  inputArea.value = savedInput;
+});
+
   
 //   // TODO: Add a listener for click events on the save button. This code should
 //   // use the id in the containing time-block as a key to save the user input in
@@ -76,4 +80,3 @@ $(function(){
 //         $('#currentDay').text('The Current Date is ' + currentDate);
         
 
-});
