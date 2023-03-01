@@ -30,8 +30,14 @@ $(function(){
             localStorage.setItem('hour-${inputArea.parentElement.id.split('-')[1]}'inputArea.value);
           });
           });
-      }
+      
   
+    var savedInputs = Object.entries(localStorage);
+          savedInputs.forEach(([key,value])=>{
+            var inputArea = document.querySelector('#hour-${key}.description');
+            inputArea = value;
+          })
+    
   
 //   // TODO: Add a listener for click events on the save button. This code should
 //   // use the id in the containing time-block as a key to save the user input in
