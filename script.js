@@ -17,55 +17,38 @@ $(function() {
     timeBlockEl.classList.add('row', 'time-block');
     timeBlockEl.id = 'hour-' + hour;
     containerEl.appendChild(timeBlockEl);
-
+  
     var timeInputEl = document.createElement('div');
     timeInputEl.classList.add('col-2', 'col-md-1', 'hour', 'text-center', 'py-3');
-    timeInputEl.textContent = timeBlockEl.id
+    timeInputEl.textContent = dayjs().hour(hour).format('h A');
     timeBlockEl.appendChild(timeInputEl);
-
+  
     var inputAreaEl = document.createElement('textarea');
     inputAreaEl.classList.add('col-8', 'col-md-10', 'description');
     timeBlockEl.appendChild(inputAreaEl);
-
+  
     var saveButtonEl = document.createElement('button');
     saveButtonEl.classList.add('btn', 'saveBtn', 'col-2', 'col-md-1');
     saveButtonEl.setAttribute('aria-label', 'save');
     saveButtonEl.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i>';
     timeBlockEl.appendChild(saveButtonEl);
-  }
-
   
-  var timeBlocks = document.querySelectorAll('.time-block');
-  timeBlocks.forEach((timeBlock) => {
-    var hour = parseInt(timeBlock.id.split('-')[1]);
-    if (hour < currentTime.hour()) {
-      timeBlock.classList.add('past');
-    } else if (hour === currentTime.hour()) {
-      timeBlock.classList.add('present');
-    } else {
-      timeBlock.classList.add('future');
-    }
-  });
-
-  
-  var saveButtons = document.querySelectorAll('.saveBtn');
-  saveButtons.forEach((saveButton) => {
-    saveButton.addEventListener('click', () => {
-      var inputArea = saveButton.previousElementSibling;
-      var inputValue = inputArea.value;
-      var hour = inputArea.parentElement.id.split('-')[1];
-      localStorage.setItem('hour-' + hour, inputValue);
-    });
-  });
-
-  
-  for (var hour = 9; hour <= 17; hour++) {
     var savedInput = localStorage.getItem('hour-' + hour);
-    var inputArea = document.querySelector('#hour-' + hour + ' .description');
-    inputArea.value = savedInput;
-  }
-});
+    inputAreaEl.value = savedInput;
+  
+    if (hour < currentTime.hour()) {
+      timeBlockEl.classList.add('past');
+    } else if (hour === currentTime.hour()) {
+      timeBlockEl.classList.add('present');
+    } else {
+      timeBlockEl.classList.add('future');
+    }
 
+    saveButtonEl.addEventListener('click', () => {
+      localStorage.setItem('hour-' + hour, inputAreaEl.value);
+    }); 
+  }});
+ 
 
 
   
