@@ -27,7 +27,7 @@ $(function(){
       saveButtons.forEach((saveButton) => {
           saveButton.addEventListener('click',() => {
             var inputArea = saveButton.previousElementSibling;
-            localStorage.setItem('hour-${inputArea.parentElement.id.split('-')[1]}'inputArea.value);
+            localStorage.setItem('hour-${inputArea.parentElement.id.split('-')[1]}', inputArea.value);
           });
           });
       
@@ -36,7 +36,7 @@ $(function(){
           savedInputs.forEach(([key,value])=>{
             var inputArea = document.querySelector('#hour-${key}.description');
             inputArea = value;
-          })
+          });
     
   
 //   // TODO: Add a listener for click events on the save button. This code should
