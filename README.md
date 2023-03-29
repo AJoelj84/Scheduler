@@ -10,6 +10,7 @@
     Task will be reloaded and the Time Block colors will be upated upon Refresh.
 # Links
 [Repository](https://github.com/AJoelj84/Scheduler)
+
 [Deployed-Page](https://ajoelj84.github.io/Scheduler/)
 
 # Screenshots
