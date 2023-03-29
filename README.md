@@ -11,7 +11,7 @@
 # Links
 [Repository](https://github.com/AJoelj84/Scheduler)
 
-[Deployed-Page](https://ajoelj84.github.io/Scheduler/)
+[Deployed Page](https://ajoelj84.github.io/Scheduler/)
 
 # Screenshots
 ![Alt text](https://github.com/AJoelj84/Scheduler/blob/main/assets/WDSch1.jpg)
