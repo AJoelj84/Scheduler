@@ -8,6 +8,9 @@
 # Functionality
     Simply Enter your task in the desired hour and click the save Icon to the Right
     Task will be reloaded and the Time Block colors will be upated upon Refresh.
+# Links
+[Repository](https://github.com/AJoelj84/Scheduler)
+[Deployed-Page](https://ajoelj84.github.io/Scheduler/)
 
 # Screenshots
 ![Alt text](https://github.com/AJoelj84/Scheduler/blob/main/assets/WDSch1.jpg)
